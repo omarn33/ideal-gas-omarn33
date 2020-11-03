@@ -1,4 +1,4 @@
-#include <visualizer/sketchpad.h>
+#include <visualizer/ideal_gas_simulator.h>
 
 namespace naivebayes {
 

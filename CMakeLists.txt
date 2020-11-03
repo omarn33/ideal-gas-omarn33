@@ -58,8 +58,8 @@ list(APPEND CORE_SOURCE_FILES src/core/particle.cpp src/core/particle_physics.cp
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
                             #src/core/image_processor.cpp
                             #src/core/image.cpp
-                            src/visualizer/naive_bayes_app.cc
-                            src/visualizer/sketchpad.cc)
+        src/visualizer/ideal_gas_app.cc
+        src/visualizer/ideal_gas_simulator.cc)
 
 list(APPEND TEST_FILES tests/image_tests.cc tests/particle_physics_test.cpp tests/model_trainer_tests.cpp tests/image_classifier_tests.cpp)
 

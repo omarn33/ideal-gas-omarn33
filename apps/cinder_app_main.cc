@@ -1,4 +1,4 @@
-#include <visualizer/naive_bayes_app.h>
+#include <visualizer/ideal_gas_app.h>
 
 using naivebayes::visualizer::NaiveBayesApp;
 

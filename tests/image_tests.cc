@@ -1,3 +1,4 @@
+/*
 #include <core/particle.h>
 
 #include <catch2/catch.hpp>
@@ -29,8 +30,7 @@ TEST_CASE("Image Testing") {
     REQUIRE(true);
   }
 }
-
-
+*/
 
 /*
 TODO: Rename this test file. You'll also need to modify CMakeLists.txt.

@@ -1,6 +1,7 @@
 #include <core/particle_physics.h>
 
 #include <vector>
+#include <iostream>
 
 namespace idealgas {
 
@@ -12,13 +13,18 @@ namespace idealgas {
         container_bottom_right_corner_ = bottom_right_corner;
     }
 
-    void ParticlePhysics::UpdateVelocityAfterWallCollision(Particle particle, char direction) {
+    void ParticlePhysics::CalculatePositionAfterCollision(Particle& particle)
+    {
+        particle.SetPosition(particle.GetPosition() + particle.GetVelocity());
+    }
+
+    void ParticlePhysics::CalculateVelocityAfterWallCollision(Particle& particle, char direction) {
         direction = tolower(direction);
         size_t collision_axis = -1;
 
         // Determine appropriate axis based on parameter
-        for (size_t axis = 0; axis < kDirections.size(); ++axis) {
-            if (kDirections.at(axis) == direction) {
+        for (size_t axis = 0; axis < kDimensions.size(); ++axis) {
+            if (kDimensions.at(axis) == direction) {
                 collision_axis = axis;
             }
         }
@@ -28,25 +34,29 @@ namespace idealgas {
 
         // Reflect particle velocity in the x-direction
         if (collision_axis == 0) {
+            std::cout << "Updated x-velocity" << std::endl;
             x_velocity *= -1;
         }
 
         // Reflect particle velocity in the y-direction
         if (collision_axis == 1) {
+            std::cout << "Updated y-velocity" << std::endl;
             y_velocity *= -1;
         }
 
         // Update particle velocity
+        std::cout << "x-velocity: " << x_velocity << std::endl;
+        std::cout << "y-velocity: " << y_velocity << std::endl;
         particle.SetVelocity(glm::vec2{x_velocity, y_velocity});
     }
 
-    bool ParticlePhysics::HasCollidedWithWall(Particle particle, char direction) {
+    bool ParticlePhysics::HasParticleCollidedWithWall(Particle particle, char direction) {
         direction = tolower(direction);
         size_t collision_axis = -1;
 
         // Determine appropriate axis based on parameter
-        for (size_t axis = 0; axis < kDirections.size(); ++axis) {
-            if (kDirections.at(axis) == direction) {
+        for (size_t axis = 0; axis < kDimensions.size(); ++axis) {
+            if (kDimensions.at(axis) == direction) {
                 collision_axis = axis;
             }
         }

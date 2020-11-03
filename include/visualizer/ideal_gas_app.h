@@ -5,7 +5,7 @@
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
-#include "sketchpad.h"
+#include "ideal_gas_simulator.h"
 
 namespace naivebayes {
 
