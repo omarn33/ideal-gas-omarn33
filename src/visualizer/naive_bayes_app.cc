@@ -11,7 +11,7 @@ NaiveBayesApp::NaiveBayesApp()
                  kWindowSize - 2 * kMargin) {
   ci::app::setWindowSize((int) kWindowSize, (int) kWindowSize);
 
-  x = 50;
+  x = 1500;
 }
 
 void NaiveBayesApp::draw() {
@@ -34,7 +34,7 @@ void NaiveBayesApp::draw() {
 
   ci::gl::color(ci::Color("gray"));
   ci::gl::drawSolidCircle(glm::vec2 {x, x}, 15.0f);
-  x += 10;
+  x -= 1;
 
   ci::gl::color(ci::Color("white"));
   ci::gl::drawStrokedRect( ci::Rectf( getWindowWidth()/2 - 500.0f,

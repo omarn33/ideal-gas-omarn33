@@ -52,7 +52,7 @@ get_filename_component(APP_PATH "${CMAKE_CURRENT_SOURCE_DIR}/" ABSOLUTE)
 
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
-list(APPEND CORE_SOURCE_FILES src/core/particle.cpp src/core/image_parser.cpp src/core/model_trainer.cpp)
+list(APPEND CORE_SOURCE_FILES src/core/particle.cpp src/core/particle_physics.cpp src/core/model_trainer.cpp)
 
 
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
@@ -61,7 +61,7 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
                             src/visualizer/naive_bayes_app.cc
                             src/visualizer/sketchpad.cc)
 
-list(APPEND TEST_FILES tests/image_tests.cc tests/image_parser_tests.cpp tests/model_trainer_tests.cpp tests/image_classifier_tests.cpp)
+list(APPEND TEST_FILES tests/image_tests.cc tests/particle_physics_test.cpp tests/model_trainer_tests.cpp tests/image_classifier_tests.cpp)
 
 add_executable(train-model apps/main.cc ${CORE_SOURCE_FILES} src/core/model_trainer.cpp include/core/image_classifier.h src/core/image_classifier.cpp)
 target_include_directories(train-model PRIVATE include)
@@ -74,7 +74,7 @@ ci_make_app(
 )
 
 ci_make_app(
-        APP_NAME        naive-bayes-test
+        APP_NAME        ideal-gas-test
         CINDER_PATH     ${CINDER_PATH}
         SOURCES         tests/test_main.cc ${SOURCE_FILES} ${TEST_FILES}
         INCLUDES        include
@@ -82,5 +82,5 @@ ci_make_app(
 )
 
 if(MSVC)
-    set_property(TARGET naive-bayes-test APPEND_STRING PROPERTY LINK_FLAGS " /SUBSYSTEM:CONSOLE")
+    set_property(TARGET ideal-gas-test APPEND_STRING PROPERTY LINK_FLAGS " /SUBSYSTEM:CONSOLE")
 endif()

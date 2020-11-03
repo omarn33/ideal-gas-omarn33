@@ -1,10 +1,6 @@
-//
-// Created by Omar on 10/12/2020.
-//
 #include <core/particle.h>
 
 #include <iostream>
-#include <utility>
 
 namespace idealgas {
 
@@ -15,4 +11,47 @@ namespace idealgas {
         position_ = position;
         velocity_ = velocity;
     }
+
+    /** Getter Methods */
+    float Particle::GetRadius() {
+        return radius_;
+    }
+
+    double Particle::GetMass() {
+        return mass_;
+    }
+
+    std::string Particle::GetColor() {
+        return color_;
+    }
+
+    glm::vec2 Particle::GetPosition() {
+        return position_;
+    }
+
+    glm::vec2 Particle::GetVelocity() {
+        return velocity_;
+    }
+
+    /** Setter Methods */
+    void Particle::SetRadius(float radius) {
+        radius_ = radius;
+    }
+
+    void Particle::SetMass(double mass) {
+        mass_ = mass;
+    }
+
+    void Particle::SetColor(std::string color) {
+        color_ = color;
+    }
+
+    void Particle::SetPosition(glm::vec2 position) {
+        position_ = position;
+    }
+
+    void Particle::SetVelocity(glm::vec2 velocity) {
+        velocity_ = velocity;
+    }
+
 }  // namespace idealgas
