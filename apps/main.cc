@@ -1,11 +1,13 @@
 #include <core/particle.h>
 #include <core/particle_physics.h>
 #include <core/model_trainer.h>
+#include <visualizer/ideal_gas_simulator.h>
 
 
 #include <iostream>
 
 using namespace idealgas;
+using namespace visualizer;
 
 using std::cout;
 using std::endl;

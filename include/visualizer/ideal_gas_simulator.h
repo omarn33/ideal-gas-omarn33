@@ -1,56 +1,69 @@
 #pragma once
 
-#include "cinder/gl/gl.h"
+//#include "../../../../include/glm/glm.hpp"
+#include <cinder/gl/gl.h>
 #include <core/particle_physics.h>
 #include <string>
 #include <vector>
 
 namespace idealgas {
 
-namespace visualizer {
+    namespace visualizer {
 
-    class IdealGasSimulator {
+        class IdealGasSimulator {
 
-    private:
-        /** Coordinates for container */
-        glm::vec2 container_top_left_corner_;
-        glm::vec2 container_bottom_right_corner_;
+        private:
+            /** Coordinates for container */
+            glm::vec2 container_top_left_corner_;
+            glm::vec2 container_bottom_right_corner_;
 
-        /** Container attributes */
-        const std::string container_color_ = "white";
-        float container_stroke_ = 10.0f;
+            /** Container attributes */
+            const std::string container_color_ = "white";
+            float container_stroke_ = 10.0f;
 
-        /** Particle Physics */
-        ParticlePhysics physics_;
-        size_t num_of_particles_;
+            /** Default Particle */
+            float particle_radius_;
+            double particle_mass_;
+            std::string particle_color_;
+            glm::vec2 initial_position_;
+            glm::vec2 initial_velocity_;
 
-    public:
-        IdealGasSimulator(const glm::vec2& top_left_corner, const glm::vec2& bottom_right_corner, std::vector<Particle>& particles);
+            /** Particle Physics */
+            ParticlePhysics physics_;
+            size_t num_of_particles_;
 
-        /**
-         * Displays the current state of the ideal gas simulator in the cinder application
-         */
-        void Draw();
+        public:
+            /**
+             * Constructor that takes in boundaries of container
+             * @param top_left_corner vec2 coordinate of the top left corner of the container
+             * @param bottom_right_corner vec2 coordinate of the bottom right corner of the container
+             */
+            IdealGasSimulator(glm::vec2 top_left_corner, glm::vec2 bottom_right_corner);
 
-        /**
-         * Updates the state of the particles within the ideal gas simulator
-         */
-        void Update();
+            /**
+             * Displays the current state of the ideal gas simulator in the cinder application
+             */
+            void Draw();
 
-        /**
-         * Adds particle to the container
-         * @param particle The particle to be added
-         */
-        void AddParticle(Particle particle);
+            /**
+             * Updates the state of the particles within the ideal gas simulator
+             */
+            void Update();
 
-        /**
-         * Clears all particles within the container
-         */
-        void ClearParticles();
-    };
+            /**
+             * Adds particle to the container
+             * @param particle The particle to be added
+             */
+            void AddParticle();
+
+            /**
+             * Clears all particles within the container
+             */
+            void ClearParticles();
+        };
 
 
-} // namespace visualizer
+    } // namespace visualizer
 
 } // namespace idealgas
 

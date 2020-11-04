@@ -7,36 +7,35 @@
 #include "cinder/gl/gl.h"
 #include "ideal_gas_simulator.h"
 
-namespace naivebayes {
+namespace idealgas {
 
-namespace visualizer {
+    namespace visualizer {
 
-/**
- * Allows a user to draw a digit on a sketchpad and uses Naive Bayes to
- * classify it.
- */
-class NaiveBayesApp : public ci::app::App {
- public:
-  NaiveBayesApp();
+        /** Allows a user to add ideal gas particles to a container and view collisions  */
+        class IdealGasApp : public ci::app::App {
 
-  void draw() override;
-  //void update() override;
-  void mouseDown(ci::app::MouseEvent event) override;
-  void mouseDrag(ci::app::MouseEvent event) override;
-  void keyDown(ci::app::KeyEvent event) override;
+        private:
+            IdealGasSimulator simulator_;
 
-  // provided that you can see the entire UI on your screen.
-  const double kWindowSize = 1500; //875;
-  const double kMargin = 200; //100;
-  const size_t kImageDimension = 28;
+            /** Window Screen Margins */
+            const float kWindowSize = 1500.0f;
+            const float kMargin = 300.0f;
+            const double kContainerSize = kWindowSize - kMargin;
 
- private:
-  Sketchpad sketchpad_;
-  int current_prediction_ = -1;
-  int x;
-  //ImageClassifier classifier;
-};
+        public:
+            IdealGasApp();
 
-}  // namespace visualizer
+            void draw() override;
 
-}  // namespace naivebayes
+            void update() override;
+
+            //void mouseDown(ci::app::MouseEvent event) override;
+
+            //void mouseDrag(ci::app::MouseEvent event) override;
+
+            void keyDown(ci::app::KeyEvent event) override;
+        };
+
+    }  // namespace visualizer
+
+}  // namespace idealgas
