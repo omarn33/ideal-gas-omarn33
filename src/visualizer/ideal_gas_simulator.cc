@@ -1,9 +1,70 @@
 #include <visualizer/ideal_gas_simulator.h>
 
-namespace naivebayes {
+namespace idealgas {
 
 namespace visualizer {
 
+    IdealGasSimulator::IdealGasSimulator(const glm::vec2 &top_left_corner, const glm::vec2 &bottom_right_corner,
+                                         std::vector<Particle>& particles) {
+        container_bottom_right_corner_ = top_left_corner;
+        container_bottom_right_corner_ = bottom_right_corner;
+
+        physics_ = ParticlePhysics(particles, top_left_corner, bottom_right_corner);
+        num_of_particles_ = particles.size();
+    }
+
+    void IdealGasSimulator::Draw() {
+        // Draw the container
+        ci::gl::color(ci::Color("white")); // C++ wasn't allowing me to use container_color_ for some reason
+        ci::Rectf pixel_bounding_box(container_top_left_corner_, container_bottom_right_corner_);
+        ci::gl::drawSolidRect(pixel_bounding_box);
+
+        // Draw particles
+        for(size_t particle = 0; particle < num_of_particles_; ++particle)
+        {
+            ci::gl::color(ci::Color("gray")); // C++ wasn't allowing me to use particle.GetColor() for some reason
+            ci::gl::drawSolidCircle(physics_.GetParticlesVector().at(particle).GetPosition(), physics_.GetParticlesVector().at(particle).GetRadius());
+        }
+    }
+
+    void IdealGasSimulator::Update() {
+        // Determine if a particle collided with the container
+        for (size_t particle = 0; particle < num_of_particles_; ++particle) {
+            // Determine if a particle collided with the container in a corner
+            if (physics_.HasParticleCollidedWithWall(physics_.GetParticlesVector().at(particle), 'x') &&
+                physics_.HasParticleCollidedWithWall(physics_.GetParticlesVector().at(particle), 'y')) {
+                physics_.CalculateVelocityAfterWallCollision(physics_.GetParticlesVector().at(particle), 'x');
+                physics_.CalculateVelocityAfterWallCollision(physics_.GetParticlesVector().at(particle), 'y');
+            }
+                // Determine if the a particle collided with the left/right container boundary
+            else if (physics_.HasParticleCollidedWithWall(physics_.GetParticlesVector().at(particle), 'x')) {
+                physics_.CalculateVelocityAfterWallCollision(physics_.GetParticlesVector().at(particle), 'x');
+            }
+                // Determine if the a particle collided with the left/right container boundary
+            else if (physics_.HasParticleCollidedWithWall(physics_.GetParticlesVector().at(particle), 'y')) {
+                physics_.CalculateVelocityAfterWallCollision(physics_.GetParticlesVector().at(particle), 'y');
+            }
+
+            // Update particle position
+            physics_.CalculatePositionAfterCollision(physics_.GetParticlesVector().at(particle));
+        }
+    }
+
+    void IdealGasSimulator::AddParticle(Particle particle)
+    {
+        physics_.GetParticlesVector().push_back(particle);
+        ++num_of_particles_;
+    }
+
+    void IdealGasSimulator::ClearParticles() {
+        physics_.GetParticlesVector().clear();
+        num_of_particles_ = 0;
+    }
+} // namespace visualizer
+
+} // namespace idealgas
+
+    /*
 using glm::vec2;
 
 Sketchpad::Sketchpad(const vec2& top_left_corner, size_t num_pixels_per_side,
@@ -66,7 +127,7 @@ void Sketchpad::HandleBrush(const vec2& brush_screen_coords) {
 void Sketchpad::Clear() {
   // TODO: implement this method
 }
-
 }  // namespace visualizer
 
 }  // namespace naivebayes
+*/

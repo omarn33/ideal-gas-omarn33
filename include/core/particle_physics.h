@@ -1,5 +1,6 @@
 #pragma once
 
+#include <visualizer/ideal_gas_simulator.h>
 #include <core/particle.h>
 #include <map>
 #include <vector>
@@ -10,11 +11,15 @@ class ParticlePhysics {
 private:
     std::vector<Particle> particles_;
     size_t number_of_particles_;
-    const std::vector<char> kDimensions = {'x', 'y'};
+    std::vector<char> kDimensions = {'x', 'y'};
     glm::vec2 container_top_left_corner_;
     glm::vec2 container_bottom_right_corner_;
 
+    friend visualizer::IdealGasSimulator;
+
 public:
+    ParticlePhysics() = default;
+
     /**
      * Constructor that takes in takes in particles and initializes container boundaries
      * @param particles The various particles in the container
@@ -44,7 +49,11 @@ public:
      */
     bool HasParticleCollidedWithWall(Particle particle, char direction);
 
+    /** Getter Methods */
+    std::vector<Particle> GetParticlesVector();
 
+    /** Setter Methods */
+    void SetParticlesVector(std::vector<Particle>& particles);
 
 };
 

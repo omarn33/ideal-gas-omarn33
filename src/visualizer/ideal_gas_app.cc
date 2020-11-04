@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 //using glm::vec2;
 
-namespace naivebayes {
+namespace idealgas {
 
 namespace visualizer {
 

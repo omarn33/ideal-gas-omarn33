@@ -1,17 +1,72 @@
 #pragma once
 
 #include "cinder/gl/gl.h"
+#include <core/particle_physics.h>
+#include <string>
 #include <vector>
 
-namespace naivebayes {
+namespace idealgas {
 
 namespace visualizer {
+
+    class IdealGasSimulator {
+
+    private:
+        /** Coordinates for container */
+        glm::vec2 container_top_left_corner_;
+        glm::vec2 container_bottom_right_corner_;
+
+        /** Container attributes */
+        const std::string container_color_ = "white";
+        float container_stroke_ = 10.0f;
+
+        /** Particle Physics */
+        ParticlePhysics physics_;
+        size_t num_of_particles_;
+
+    public:
+        IdealGasSimulator(const glm::vec2& top_left_corner, const glm::vec2& bottom_right_corner, std::vector<Particle>& particles);
+
+        /**
+         * Displays the current state of the ideal gas simulator in the cinder application
+         */
+        void Draw();
+
+        /**
+         * Updates the state of the particles within the ideal gas simulator
+         */
+        void Update();
+
+        /**
+         * Adds particle to the container
+         * @param particle The particle to be added
+         */
+        void AddParticle(Particle particle);
+
+        /**
+         * Clears all particles within the container
+         */
+        void ClearParticles();
+    };
+
+
+} // namespace visualizer
+
+} // namespace idealgas
+
+
+
+
+
+
+
 
 /**
  * A sketchpad which will be displayed in the Cinder application and respond to
  * mouse events. Furthermore, the sketchpad can output its current state in the
  * same format as the Naive Bayes image data files.
  */
+/*
 class Sketchpad {
  public:
   /**
@@ -27,12 +82,16 @@ class Sketchpad {
    * @param brush_radius        the maximum distance (measured in sketchpad
    *                            pixels) from the brush that will be shaded
    */
+
+/*
   Sketchpad(const glm::vec2& top_left_corner, size_t num_pixels_per_side,
             double sketchpad_size, double brush_radius = 1.15);
+
 
   /**
    * Displays the current state of the sketchpad in the Cinder application.
    */
+/*
   void Draw() const;
 
   /**
@@ -43,11 +102,13 @@ class Sketchpad {
    * @param brush_screen_coords the screen coordinates at which the brush is
    *           located
    */
+/*
   void HandleBrush(const glm::vec2& brush_screen_coords);
 
   /**
    * Set all of the sketchpad pixels to an unshaded state.
    */
+/*
   void Clear();
 
  private:
@@ -56,6 +117,7 @@ class Sketchpad {
   size_t num_pixels_per_side_;
 
   /** Number of screen pixels in the width/height of one sketchpad pixel */
+/*
   double pixel_side_length_;
 
   double brush_radius_;
@@ -64,3 +126,4 @@ class Sketchpad {
 }  // namespace visualizer
 
 }  // namespace naivebayes
+*/

@@ -94,4 +94,14 @@ namespace idealgas {
 
         return false;
     }
+
+    std::vector<Particle> ParticlePhysics::GetParticlesVector()
+    {
+        return particles_;
+    }
+
+    void ParticlePhysics::SetParticlesVector(std::vector<Particle>& particles)
+    {
+        particles_ = particles;
+    }
 }  // namespace idealgas

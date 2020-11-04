@@ -15,8 +15,14 @@ private:
     glm::vec2 velocity_;
 
 public:
-    //Particle() = default;
-
+    /**
+     * Constructor that initializes particle attributes
+     * @param radius float representing the particle radius
+     * @param mass double representing the particle mass
+     * @param color string representing the particle color
+     * @param position vec2 representing the particle's position
+     * @param velocity vec2 representing the particle's velocity
+     */
     Particle(float radius, double mass, std::string color, glm::vec2 position, glm::vec2 velocity);
 
     /** Getter Methods */
