@@ -1,6 +1,7 @@
 #pragma once
 
 #include <core/particle.h>
+#include <cmath>
 #include <map>
 #include <vector>
 
@@ -42,18 +43,19 @@ namespace idealgas {
         bool HasParticleCollidedWithWall(Particle particle, char direction);
 
         /**
-         * Determines if two given particles collided with each other
+         * Determines if two particles collided with each other
          * @param particle1 The first particle
          * @param particle2 The second particle
          * @return true if the particles collided with each other, false otherwise
          */
         bool HasParticleCollidedWithParticle(Particle particle1, Particle particle2);
 
-        /** Getter Methods */
-        std::vector<Particle> GetParticlesVector();
-
-        /** Setter Methods */
-        void SetParticlesVector(std::vector<Particle> &particles);
+        /**
+         * Calculates the velocity for particles that have collided
+         * @param particle1 The first particle
+         * @param particle2 The second particle
+         */
+        void CalculateVelocityAfterParticleCollision(Particle &particle1, Particle &particle2);
 
     };
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <core/particle_physics.h>
-#include <cinder/gl/gl.h>
+//#include <cinder/gl/gl.h>
 #include <string>
 #include <vector>
 

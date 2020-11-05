@@ -1,5 +1,6 @@
 #include <visualizer/ideal_gas_simulator.h>
 #include <iostream>
+#include <cinder/gl/gl.h>
 
 namespace idealgas {
 
