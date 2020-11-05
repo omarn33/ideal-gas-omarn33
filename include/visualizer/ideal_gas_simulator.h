@@ -1,8 +1,7 @@
 #pragma once
 
-//#include "../../../../include/glm/glm.hpp"
-#include <cinder/gl/gl.h>
 #include <core/particle_physics.h>
+#include <cinder/gl/gl.h>
 #include <string>
 #include <vector>
 
@@ -19,7 +18,7 @@ namespace idealgas {
 
             /** Container attributes */
             const std::string container_color_ = "white";
-            float container_stroke_ = 10.0f;
+            const float container_stroke_ = 10.0f;
 
             /** Default Particle */
             float particle_radius_;
@@ -29,8 +28,8 @@ namespace idealgas {
             glm::vec2 initial_velocity_;
 
             /** Particle Physics */
+            std::vector<Particle> particles_;
             ParticlePhysics physics_;
-            size_t num_of_particles_;
 
         public:
             /**

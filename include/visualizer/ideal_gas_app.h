@@ -15,12 +15,12 @@ namespace idealgas {
         class IdealGasApp : public ci::app::App {
 
         private:
-            IdealGasSimulator simulator_;
-
             /** Window Screen Margins */
-            const float kWindowSize = 1500.0f;
-            const float kMargin = 300.0f;
-            const double kContainerSize = kWindowSize - kMargin;
+            float kWindowSize = 1500.0f;
+            float kMargin = 300.0f;
+            //double kContainerSize = kWindowSize - kMargin;
+
+            IdealGasSimulator simulator_;
 
         public:
             IdealGasApp();

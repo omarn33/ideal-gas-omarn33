@@ -7,7 +7,8 @@ namespace idealgas {
 
         IdealGasApp::IdealGasApp() : simulator_(IdealGasSimulator(glm::vec2(kMargin, kMargin),
                                                                   glm::vec2(kWindowSize - kMargin,
-                                                                            kWindowSize - kMargin))) {
+                                                                            kWindowSize - kMargin)))
+                                                                            {
             ci::app::setWindowSize((int) kWindowSize, (int) kWindowSize);
         }
 
@@ -21,7 +22,7 @@ namespace idealgas {
             // Display instructions
             ci::gl::drawStringCentered(
                     "Press 'Space' to add a particle. Press 'Delete' to remove a particle.",
-                    glm::vec2(kWindowSize / 2, kMargin / 2), ci::Color("white"), ci::Font("Arial", 48.0f));
+                    glm::vec2(kWindowSize / 2, kMargin / 2), ci::Color("white"), ci::Font("Arial", 60.0f));
 
             // Display Ideal Gas Simulator
             simulator_.Draw();

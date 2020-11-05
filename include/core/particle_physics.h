@@ -8,8 +8,6 @@ namespace idealgas {
 
     class ParticlePhysics {
     private:
-        std::vector<Particle> particles_;
-        size_t number_of_particles_;
         std::vector<char> kDimensions = {'x', 'y'};
         glm::vec2 container_top_left_corner_;
         glm::vec2 container_bottom_right_corner_;
@@ -17,11 +15,10 @@ namespace idealgas {
     public:
         /**
          * Constructor that takes in takes in particles and initializes container boundaries
-         * @param particles The various particles in the container
          * @param top_left_corner vec2 representing the coordinate of the top left corner of the container
          * @param bottom_right_corner vec2 representing the coordinate of the bottom right corner of the container
          */
-        ParticlePhysics(std::vector<Particle> particles, glm::vec2 top_left_corner, glm::vec2 bottom_right_corner);
+        ParticlePhysics(glm::vec2 top_left_corner, glm::vec2 bottom_right_corner);
 
         /**
          * Calculates the position of the particle after any collision (with wall or other particle)
@@ -43,6 +40,14 @@ namespace idealgas {
          * @return true if the particle collided with the wall, false otherwise
          */
         bool HasParticleCollidedWithWall(Particle particle, char direction);
+
+        /**
+         * Determines if two given particles collided with each other
+         * @param particle1 The first particle
+         * @param particle2 The second particle
+         * @return true if the particles collided with each other, false otherwise
+         */
+        bool HasParticleCollidedWithParticle(Particle particle1, Particle particle2);
 
         /** Getter Methods */
         std::vector<Particle> GetParticlesVector();

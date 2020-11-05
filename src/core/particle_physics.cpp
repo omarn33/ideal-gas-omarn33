@@ -5,20 +5,16 @@
 
 namespace idealgas {
 
-    ParticlePhysics::ParticlePhysics(std::vector<Particle> particles, glm::vec2 top_left_corner,
-                                     glm::vec2 bottom_right_corner) {
-        particles_ = particles;
-        number_of_particles_ = particles.size();
+    ParticlePhysics::ParticlePhysics(glm::vec2 top_left_corner, glm::vec2 bottom_right_corner) {
         container_top_left_corner_ = top_left_corner;
         container_bottom_right_corner_ = bottom_right_corner;
     }
 
-    void ParticlePhysics::CalculatePositionAfterCollision(Particle& particle)
-    {
+    void ParticlePhysics::CalculatePositionAfterCollision(Particle &particle) {
         particle.SetPosition(particle.GetPosition() + particle.GetVelocity());
     }
 
-    void ParticlePhysics::CalculateVelocityAfterWallCollision(Particle& particle, char direction) {
+    void ParticlePhysics::CalculateVelocityAfterWallCollision(Particle &particle, char direction) {
         direction = tolower(direction);
         size_t collision_axis = -1;
 
@@ -74,7 +70,8 @@ namespace idealgas {
         if (collision_axis == 1) {
             if ((particle.GetPosition().y - particle.GetRadius() <= container_top_left_corner_.y) && (y_velocity < 0)) {
                 return true;
-            } else if ((particle.GetPosition().y + particle.GetRadius() >= container_bottom_right_corner_.y) && (y_velocity > 0)) {
+            } else if ((particle.GetPosition().y + particle.GetRadius() >= container_bottom_right_corner_.y) &&
+                       (y_velocity > 0)) {
                 return true;
             } else {
                 return false;
@@ -85,7 +82,8 @@ namespace idealgas {
         if (collision_axis == 0) {
             if ((particle.GetPosition().x - particle.GetRadius() <= container_top_left_corner_.x) && (x_velocity < 0)) {
                 return true;
-            } else if ((particle.GetPosition().x + particle.GetRadius() >= container_bottom_right_corner_.x) && (x_velocity > 0)) {
+            } else if ((particle.GetPosition().x + particle.GetRadius() >= container_bottom_right_corner_.x) &&
+                       (x_velocity > 0)) {
                 return true;
             } else {
                 return false;
@@ -95,13 +93,18 @@ namespace idealgas {
         return false;
     }
 
-    std::vector<Particle> ParticlePhysics::GetParticlesVector()
-    {
-        return particles_;
+    bool ParticlePhysics::HasParticleCollidedWithParticle(Particle particle1, Particle particle2) {
+        if ((glm::distance(particle1.GetPosition(), particle2.GetPosition()) <=
+             particle1.GetRadius() + particle2.GetRadius()) &&
+            (glm::dot((particle1.GetVelocity() - particle2.GetVelocity()),
+                      (particle1.GetPosition() - particle2.GetPosition())) < 0))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    void ParticlePhysics::SetParticlesVector(std::vector<Particle>& particles)
-    {
-        particles_ = particles;
-    }
 }  // namespace idealgas

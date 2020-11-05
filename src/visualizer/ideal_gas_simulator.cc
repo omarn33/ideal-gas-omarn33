@@ -6,82 +6,65 @@ namespace idealgas {
     namespace visualizer {
 
         IdealGasSimulator::IdealGasSimulator(glm::vec2 top_left_corner, glm::vec2 bottom_right_corner) : physics_(
-                ParticlePhysics(std::vector<Particle>(), top_left_corner, bottom_right_corner)) {
+                ParticlePhysics(top_left_corner, bottom_right_corner)) {
 
             container_top_left_corner_ = top_left_corner;
             container_bottom_right_corner_ = bottom_right_corner;
-            num_of_particles_ = 0;
-
-            std::cout << "Container Top Left: (" << container_top_left_corner_.x << " , "
-                      << container_top_left_corner_.y << ")" << std::endl;
-            std::cout << "Container Bottom Right: (" << container_bottom_right_corner_.x << " , "
-                      << container_bottom_right_corner_.y << ")" << std::endl;
 
             // Set default particle values
-            particle_radius_ = 10.0f;
+            particle_radius_ = 20.0f;
             particle_mass_ = 1.0;
             particle_color_ = "gray";
-            initial_position_ = {(top_left_corner.x - bottom_right_corner.x) / 2,
-                                 (top_left_corner.y - bottom_right_corner.y) / 2};
-            initial_velocity_ = {1.0, 1.0};
+            initial_position_ = {(bottom_right_corner.x - top_left_corner.x) / 2,
+                                 (bottom_right_corner.y - top_left_corner.y) / 2};
+            initial_velocity_ = {10.0, 20.0};
         }
 
         void IdealGasSimulator::Draw() {
             // Draw the container
-            ci::gl::color(ci::Color("white")); // C++ wasn't allowing me to use container_color_ for some reason
-            ci::Rectf pixel_bounding_box(container_top_left_corner_, container_bottom_right_corner_);
-            ci::gl::drawSolidRect(pixel_bounding_box);
-
-            // Draw a rectangle
-            /*
             ci::gl::color(ci::Color("white"));
-            ci::gl::drawStrokedRect( ci::Rectf( 750.0f - 500.0f,
-                                                750.0f - 500.0f,
-                                                750.0f + 500.0f,
-                                                750.0f + 500.0f), 10.0f);
-                                                */
+            ci::gl::drawStrokedRect( ci::Rectf( container_top_left_corner_,
+                                                container_bottom_right_corner_), container_stroke_);
 
             // Draw particles
-            for (size_t particle = 0; particle < num_of_particles_; ++particle) {
+            for (size_t particle = 0; particle < particles_.size(); ++particle) {
                 ci::gl::color(ci::Color("gray")); // C++ wasn't allowing me to use particle.GetColor() for some reason
-                ci::gl::drawSolidCircle(physics_.GetParticlesVector().at(particle).GetPosition(),
-                                        physics_.GetParticlesVector().at(particle).GetRadius());
+                ci::gl::drawSolidCircle(particles_.at(particle).GetPosition(),
+                                        particles_.at(particle).GetRadius());
             }
         }
 
         void IdealGasSimulator::Update() {
             // Determine if a particle collided with the container
-            for (size_t particle = 0; particle < num_of_particles_; ++particle) {
+            for (size_t particle = 0; particle < particles_.size(); ++particle) {
                 // Determine if a particle collided with the container in a corner
-                if (physics_.HasParticleCollidedWithWall(physics_.GetParticlesVector().at(particle), 'x') &&
-                    physics_.HasParticleCollidedWithWall(physics_.GetParticlesVector().at(particle), 'y')) {
-                    physics_.CalculateVelocityAfterWallCollision(physics_.GetParticlesVector().at(particle), 'x');
-                    physics_.CalculateVelocityAfterWallCollision(physics_.GetParticlesVector().at(particle), 'y');
+                if (physics_.HasParticleCollidedWithWall(particles_.at(particle), 'x') &&
+                    physics_.HasParticleCollidedWithWall(particles_.at(particle), 'y')) {
+                    physics_.CalculateVelocityAfterWallCollision(particles_.at(particle), 'x');
+                    physics_.CalculateVelocityAfterWallCollision(particles_.at(particle), 'y');
                 }
-                    // Determine if the a particle collided with the left/right container boundary
-                else if (physics_.HasParticleCollidedWithWall(physics_.GetParticlesVector().at(particle), 'x')) {
-                    physics_.CalculateVelocityAfterWallCollision(physics_.GetParticlesVector().at(particle), 'x');
+                    // Determine if a particle collided with the left/right container boundary
+                else if (physics_.HasParticleCollidedWithWall(particles_.at(particle), 'x')) {
+                    physics_.CalculateVelocityAfterWallCollision(particles_.at(particle), 'x');
                 }
-                    // Determine if the a particle collided with the left/right container boundary
-                else if (physics_.HasParticleCollidedWithWall(physics_.GetParticlesVector().at(particle), 'y')) {
-                    physics_.CalculateVelocityAfterWallCollision(physics_.GetParticlesVector().at(particle), 'y');
+                    // Determine if a particle collided with the left/right container boundary
+                else if (physics_.HasParticleCollidedWithWall(particles_.at(particle), 'y')) {
+                    physics_.CalculateVelocityAfterWallCollision(particles_.at(particle), 'y');
                 }
 
                 // Update particle position
-                physics_.CalculatePositionAfterCollision(physics_.GetParticlesVector().at(particle));
+                physics_.CalculatePositionAfterCollision(particles_.at(particle));
             }
         }
 
         void IdealGasSimulator::AddParticle() {
             // Create new particle
             Particle particle(particle_radius_, particle_mass_, particle_color_, initial_position_, initial_velocity_);
-            physics_.GetParticlesVector().push_back(particle);
-            ++num_of_particles_;
+            particles_.push_back(particle);
         }
 
         void IdealGasSimulator::ClearParticles() {
-            physics_.GetParticlesVector().clear();
-            num_of_particles_ = 0;
+            particles_.clear();
         }
     } // namespace visualizer
 

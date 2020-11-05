@@ -28,30 +28,5 @@ int main(int argc, char* argv[]) {
     Particle particle1(10.0f, 10.0, "white", position1, velocity1);
     Particle particle2(10.0f, 10.0, "white", position2, velocity2);
 
-    std::vector<Particle> particles = {particle1, particle2};
-
-
-    ParticlePhysics physics(particles, top_left, bottom_right);
-    std::cout << "Particle Collided in X: " << physics.HasParticleCollidedWithWall(particle1, 'x') << std::endl;
-    if(physics.HasParticleCollidedWithWall(particle1, 'x'))
-    {
-        std::cout << "x-collision true" << std::endl;
-        physics.CalculateVelocityAfterWallCollision(particle1, 'x');
-    }
-
-    std::cout << "Particle Collided in Y: " << physics.HasParticleCollidedWithWall(particle1, 'y') << std::endl;
-    if(physics.HasParticleCollidedWithWall(particle1, 'y'))
-    {
-        std::cout << "y-collision true" << std::endl;
-        physics.CalculateVelocityAfterWallCollision(particle1, 'y');
-    }
-
-
-    physics.CalculatePositionAfterCollision(particle1);
-
-
-    std::cout << "Particle Update x-coordinate: " << particle1.GetPosition().x << std::endl;
-    std::cout << "Particle Update y-coordinate: " << particle1.GetPosition().y << std::endl;
-
   return 0;
 }

@@ -63,11 +63,11 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
 
 list(APPEND TEST_FILES tests/image_tests.cc tests/particle_physics_test.cpp tests/model_trainer_tests.cpp tests/image_classifier_tests.cpp)
 
-add_executable(train-model apps/main.cc ${CORE_SOURCE_FILES} src/core/model_trainer.cpp include/core/image_classifier.h src/core/image_classifier.cpp)
-target_include_directories(train-model PRIVATE include)
+add_executable(main apps/main.cc ${CORE_SOURCE_FILES} src/core/model_trainer.cpp include/core/image_classifier.h src/core/image_classifier.cpp)
+target_include_directories(main PRIVATE include)
 
 ci_make_app(
-        APP_NAME        sketchpad-classifier
+        APP_NAME        ideal-gas-simulation
         CINDER_PATH     ${CINDER_PATH}
         SOURCES         apps/cinder_app_main.cc ${SOURCE_FILES}
         INCLUDES        include
