@@ -1,8 +1,5 @@
 #include <core/particle_physics.h>
 
-#include <vector>
-#include <iostream>
-
 namespace idealgas {
 
     ParticlePhysics::ParticlePhysics(glm::vec2 top_left_corner, glm::vec2 bottom_right_corner) {
@@ -30,19 +27,15 @@ namespace idealgas {
 
         // Reflect particle velocity in the x-direction
         if (collision_axis == 0) {
-            std::cout << "Updated x-velocity" << std::endl;
             x_velocity *= -1;
         }
 
         // Reflect particle velocity in the y-direction
         if (collision_axis == 1) {
-            std::cout << "Updated y-velocity" << std::endl;
             y_velocity *= -1;
         }
 
         // Update particle velocity
-        std::cout << "x-velocity: " << x_velocity << std::endl;
-        std::cout << "y-velocity: " << y_velocity << std::endl;
         particle.SetVelocity(glm::vec2{x_velocity, y_velocity});
     }
 
@@ -97,26 +90,32 @@ namespace idealgas {
         if ((glm::distance(particle1.GetPosition(), particle2.GetPosition()) <=
              particle1.GetRadius() + particle2.GetRadius()) &&
             (glm::dot((particle1.GetVelocity() - particle2.GetVelocity()),
-                      (particle1.GetPosition() - particle2.GetPosition())) < 0))
-        {
+                      (particle1.GetPosition() - particle2.GetPosition())) < 0)) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
-    void ParticlePhysics::CalculateVelocityAfterParticleCollision(Particle &particle1, Particle &particle2)
-    {
+    void ParticlePhysics::CalculateVelocityAfterParticleCollision(Particle &particle1, Particle &particle2) {
         // Store particle1 initial velocity
         glm::vec2 particle1_initial_velocity = particle1.GetVelocity();
 
         // Calculate new velocity for particle1
-        particle1.SetVelocity(particle1.GetVelocity() - (glm::dot(particle1.GetVelocity() - particle2.GetVelocity(), particle1.GetPosition() - particle2.GetPosition()) / (pow(glm::length(particle1.GetPosition() - particle2.GetPosition()), 2))) * (particle1.GetPosition() - particle2.GetPosition()));
+        particle1.SetVelocity(particle1.GetVelocity() - (glm::dot(particle1.GetVelocity() - particle2.GetVelocity(),
+                                                                  particle1.GetPosition() - particle2.GetPosition()) /
+                                                         (pow(glm::length(
+                                                                 particle1.GetPosition() - particle2.GetPosition()),
+                                                              2))) *
+                                                        (particle1.GetPosition() - particle2.GetPosition()));
 
         // Calculate new velocity for particle2
-        particle2.SetVelocity(particle2.GetVelocity() - (glm::dot(particle2.GetVelocity() - particle1_initial_velocity, particle2.GetPosition() - particle1.GetPosition()) / (pow(glm::length(particle2.GetPosition() - particle1.GetPosition()), 2))) * (particle2.GetPosition() - particle1.GetPosition()));
+        particle2.SetVelocity(particle2.GetVelocity() - (glm::dot(particle2.GetVelocity() - particle1_initial_velocity,
+                                                                  particle2.GetPosition() - particle1.GetPosition()) /
+                                                         (pow(glm::length(
+                                                                 particle2.GetPosition() - particle1.GetPosition()),
+                                                              2))) *
+                                                        (particle2.GetPosition() - particle1.GetPosition()));
     }
 
 }  // namespace idealgas

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <core/image_classifier.h>
-
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
@@ -16,9 +14,8 @@ namespace idealgas {
 
         private:
             /** Window Screen Margins */
-            float kWindowSize = 1500.0f;
-            float kMargin = 300.0f;
-            //double kContainerSize = kWindowSize - kMargin;
+            const float kWindowSize = 1500.0f;
+            const float kMargin = 300.0f;
 
             IdealGasSimulator simulator_;
 
