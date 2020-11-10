@@ -37,6 +37,8 @@ namespace idealgas {
 
         glm::vec2 GetVelocity();
 
+        double GetSpeed();
+
         /** Setter Methods */
         void SetRadius(float radius);
 

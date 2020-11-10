@@ -33,6 +33,10 @@ namespace idealgas {
         return velocity_;
     }
 
+    double Particle::GetSpeed() {
+        return glm::length(velocity_);
+    }
+
     /** Setter Methods */
     void Particle::SetRadius(float radius) {
         radius_ = radius;
