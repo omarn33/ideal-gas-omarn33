@@ -16,10 +16,10 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Warning flags
 if(MSVC)
     # warning level 3 and all warnings as errors
-    add_compile_options(/W3 /WX)
+    #add_compile_options(/W3 /WX)
 else()
     # lots of warnings and all warnings as errors
-    add_compile_options(-Wall -Wpedantic -Werror)
+    #add_compile_options(-Wall -Wpedantic -Werror)
 endif()
 
 # FetchContent added in CMake 3.11, downloads during the configure step
@@ -42,8 +42,8 @@ FetchContent_GetProperties(catch2)
 if(NOT catch2_POPULATED)
     FetchContent_Populate(catch2)
     #add_library(catch2 INTERFACE tests/image_processor_tests.cpp)
-    add_library(catch2 INTERFACE)
-    target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
+    #add_library(catch2 INTERFACE src/core/histogram.cpp include/core/histogram.h)
+    #target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 endif()
 
 get_filename_component(CINDER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../" ABSOLUTE)
@@ -58,6 +58,7 @@ list(APPEND CORE_SOURCE_FILES src/core/particle.cpp src/core/particle_physics.cp
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
                             #src/core/image_processor.cpp
                             #src/core/image.cpp
+        src/visualizer/histogram.cpp
         src/visualizer/ideal_gas_app.cc
         src/visualizer/ideal_gas_simulator.cc)
 

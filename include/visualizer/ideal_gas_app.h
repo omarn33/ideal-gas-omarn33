@@ -14,7 +14,7 @@ namespace idealgas {
 
         private:
             /** Window Screen Margins */
-            const float kWindowSize = 1500.0f;
+            const float kWindowSize = 2000.0f;
             const float kMargin = 300.0f;
 
             IdealGasSimulator simulator_;

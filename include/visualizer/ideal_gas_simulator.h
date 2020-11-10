@@ -6,6 +6,7 @@
 #include <vector>
 #include <stdlib.h>
 #include <time.h>
+#include <cinder/Color.h>
 
 namespace idealgas {
 
@@ -25,13 +26,29 @@ namespace idealgas {
             /** Default Particle */
             float particle_radius_;
             double particle_mass_;
-            std::string particle_color_;
+            ci::Color particle_color_;
             glm::vec2 initial_position_;
             glm::vec2 initial_velocity_;
+
+            /** Red Particle Atrributes */
+            const float red_particle_radius_ = 10.0f;
+            const double red_particle_mass_ = 10.0;
+            const ci::Color red_particle_color_ = ci::Color("red");
+
+            /** Blue Particle Atrributes */
+            const float blue_particle_radius_ = 10.0f;
+            const double blue_particle_mass_ = 10.0;
+            const ci::Color blue_particle_color_ = ci::Color("blue");
+
+            /** Green Particle Attributes */
+            const float green_particle_radius_ = 10.0f;
+            const double green_particle_mass_ = 10.0;
+            const ci::Color green_particle_color_ = ci::Color("green");
 
             /** Particle Physics */
             std::vector<Particle> particles_;
             ParticlePhysics physics_;
+
 
         public:
             /**
@@ -61,7 +78,7 @@ namespace idealgas {
              * Generates a random particle
              * @return Particle the randomly generated particle
              */
-            //Particle GenerateRandomParticle();
+            Particle GenerateRandomParticle();
 
             /**
              * Generates a random integer between an upper and lower bound inclusive
@@ -69,7 +86,7 @@ namespace idealgas {
              * @param upper int representing the upper bound
              * @return int representing the random number
              */
-            //int GenerateRandomNumber(int lower, int upper);
+            int GenerateRandomNumber(int lower, int upper);
 
             /**
              * Clears all particles within the container

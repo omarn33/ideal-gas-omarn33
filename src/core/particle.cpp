@@ -4,7 +4,7 @@
 
 namespace idealgas {
 
-    Particle::Particle(float radius, double mass, std::string color, glm::vec2 position, glm::vec2 velocity) {
+    Particle::Particle(float radius, double mass, ci::Color color, glm::vec2 position, glm::vec2 velocity) {
         radius_ = radius;
         mass_ = mass;
         color_ = color;
@@ -21,7 +21,7 @@ namespace idealgas {
         return mass_;
     }
 
-    std::string Particle::GetColor() {
+    ci::Color Particle::GetColor() {
         return color_;
     }
 
@@ -42,7 +42,7 @@ namespace idealgas {
         mass_ = mass;
     }
 
-    void Particle::SetColor(std::string color) {
+    void Particle::SetColor(ci::Color color) {
         color_ = color;
     }
 
