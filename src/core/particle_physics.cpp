@@ -102,20 +102,22 @@ namespace idealgas {
         glm::vec2 particle1_initial_velocity = particle1.GetVelocity();
 
         // Calculate new velocity for particle1
-        particle1.SetVelocity(particle1.GetVelocity() - (glm::dot(particle1.GetVelocity() - particle2.GetVelocity(),
-                                                                  particle1.GetPosition() - particle2.GetPosition()) /
-                                                         (pow(glm::length(
-                                                                 particle1.GetPosition() - particle2.GetPosition()),
-                                                              2))) *
-                                                        (particle1.GetPosition() - particle2.GetPosition()));
+        particle1.SetVelocity(particle1.GetVelocity() -
+                              (float) ((2 * particle2.GetMass()) / (particle1.GetMass() + particle2.GetMass())) *
+                              (glm::dot(particle1.GetVelocity() - particle2.GetVelocity(),
+                                        particle1.GetPosition() - particle2.GetPosition()) /
+                               (pow(glm::length(particle1.GetPosition() - particle2.GetPosition()), 2))) *
+                              (particle1.GetPosition() - particle2.GetPosition()));
 
         // Calculate new velocity for particle2
-        particle2.SetVelocity(particle2.GetVelocity() - (glm::dot(particle2.GetVelocity() - particle1_initial_velocity,
-                                                                  particle2.GetPosition() - particle1.GetPosition()) /
-                                                         (pow(glm::length(
-                                                                 particle2.GetPosition() - particle1.GetPosition()),
-                                                              2))) *
-                                                        (particle2.GetPosition() - particle1.GetPosition()));
+        particle2.SetVelocity(particle2.GetVelocity() -
+                              (float) ((2 * particle1.GetMass()) / (particle1.GetMass() + particle2.GetMass())) *
+                              (glm::dot(particle2.GetVelocity() - particle1_initial_velocity,
+                                        particle2.GetPosition() - particle1.GetPosition()) /
+                               (pow(glm::length(
+                                       particle2.GetPosition() - particle1.GetPosition()),
+                                    2))) *
+                              (particle2.GetPosition() - particle1.GetPosition()));
     }
 
 }  // namespace idealgas

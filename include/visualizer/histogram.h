@@ -12,19 +12,23 @@ namespace visualizer {
 
 class Histogram {
 private:
+    /** Particle Data */
     std::vector<Particle> histogram_particles_;
     std::vector<double> particle_speeds_;
-    ci::Color histogram_color_;
-
-    /** Coordinates for the histogram */
-    glm::vec2 histogram_top_left_corner_;
-    glm::vec2 histogram_bottom_right_corner_;
 
     /** Histogram Drawing Data */
+    glm::vec2 histogram_top_left_corner_;
+    glm::vec2 histogram_bottom_right_corner_;
     double histogram_side_length_;
+    ci::Color histogram_color_;
+    const ci::Color kHistogramBorderColor = ci::Color("white");
+    const float kHistogramStroke = 10.0f;
+
+    /** Bin Size */
+    double partition_size_;
     std::vector<double> partition_values;
     std::vector<size_t> num_of_particles_per_partition_;
-    double partition_size_;
+
 
 
 public:

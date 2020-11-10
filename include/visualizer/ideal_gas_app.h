@@ -4,6 +4,7 @@
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 #include "ideal_gas_simulator.h"
+#include "histogram.h"
 
 namespace idealgas {
 
@@ -14,10 +15,16 @@ namespace idealgas {
 
         private:
             /** Window Screen Margins */
-            const float kWindowSize = 2000.0f;
+            const float kWindowWidth = 3000.0f;
+            const float kWindowHeight = 2000.0f;
             const float kMargin = 300.0f;
+            const float kHistogramMargin = 175.0f;
+            const float kHistogramSideLength = 433.0f;
 
             IdealGasSimulator simulator_;
+            Histogram red_histogram_;
+            Histogram blue_histogram_;
+            Histogram green_histogram_;
 
         public:
             IdealGasApp();

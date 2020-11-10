@@ -1,3 +1,4 @@
+#include <cinder/gl/gl.h>
 #include "visualizer/histogram.h"
 
 namespace idealgas {
@@ -61,6 +62,12 @@ namespace visualizer {
     }
 
     void Histogram::Draw() {
+        // Draw Rectangle
+        ci::gl::color(kHistogramBorderColor);
+        ci::gl::drawStrokedRect(ci::Rectf(histogram_top_left_corner_,
+                                          histogram_bottom_right_corner_), kHistogramStroke);
+
+        // Draw bins
 
     }
 

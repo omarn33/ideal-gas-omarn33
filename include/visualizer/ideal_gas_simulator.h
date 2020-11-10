@@ -30,21 +30,6 @@ namespace idealgas {
             glm::vec2 initial_position_;
             glm::vec2 initial_velocity_;
 
-            /** Red Particle Atrributes */
-            const float red_particle_radius_ = 10.0f;
-            const double red_particle_mass_ = 10.0;
-            const ci::Color red_particle_color_ = ci::Color("red");
-
-            /** Blue Particle Atrributes */
-            const float blue_particle_radius_ = 10.0f;
-            const double blue_particle_mass_ = 10.0;
-            const ci::Color blue_particle_color_ = ci::Color("blue");
-
-            /** Green Particle Attributes */
-            const float green_particle_radius_ = 10.0f;
-            const double green_particle_mass_ = 10.0;
-            const ci::Color green_particle_color_ = ci::Color("green");
-
             /** Particle Physics */
             std::vector<Particle> particles_;
             ParticlePhysics physics_;
