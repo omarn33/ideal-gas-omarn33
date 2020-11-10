@@ -67,8 +67,9 @@ namespace visualizer {
         ci::gl::drawStrokedRect(ci::Rectf(histogram_top_left_corner_,
                                           histogram_bottom_right_corner_), kHistogramStroke);
 
-        // Draw bins
-
+        // Calculate
+        //float width = partition_size_ * (histogram_side_length_ / num_of_particles_per_partition_.size());
+        //float height = num_of_particles_per_partition_.at(0) * (histogram_side_length_ / histogram_particles_.size());
     }
 
 } // namespace visualizer

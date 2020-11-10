@@ -29,8 +29,6 @@ private:
     std::vector<double> partition_values;
     std::vector<size_t> num_of_particles_per_partition_;
 
-
-
 public:
     Histogram(ci::Color color, const glm::vec2 &top_left_corner, const glm::vec2 &bottom_right_corner);
 

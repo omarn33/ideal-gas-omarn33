@@ -11,14 +11,6 @@ namespace idealgas {
 
             container_top_left_corner_ = top_left_corner;
             container_bottom_right_corner_ = bottom_right_corner;
-
-            // Set default particle values
-            particle_radius_ = 30.0f;
-            particle_mass_ = 1.0;
-            particle_color_ = ci::Color("gray");
-            initial_position_ = {(bottom_right_corner.x - top_left_corner.x) / 2,
-                                 (bottom_right_corner.y - top_left_corner.y) / 2};
-            initial_velocity_ = {10.0, 9.0};
         }
 
         void IdealGasSimulator::Draw() {
@@ -75,57 +67,48 @@ namespace idealgas {
             }
         }
 
-        void IdealGasSimulator::AddParticle() {
-            // Create new particle
-            //Particle particle(particle_radius_, particle_mass_, particle_color_, initial_position_, initial_velocity_);
-            //particles_.push_back(particle);
-            particles_.push_back(GenerateRandomParticle());
-        }
-
-        Particle IdealGasSimulator::GenerateRandomParticle()
-        {
-            // Generate a random radius
-            int radius; //= GenerateRandomNumber(20, 50);
-            int x_velocity;
-            int y_velocity;
-
-            int randomNumber = GenerateRandomNumber(1, 3);
-            if(randomNumber == 1)
-            {
-                radius = 20;
-                particle_color_ = ci::Color("red");
-
-                x_velocity = 20;
-                y_velocity = 20;
-            }
-            else if (randomNumber == 2)
-            {
-                radius = 40;
-                particle_color_ = ci::Color("blue");
-
-                x_velocity = 10;
-                y_velocity = 10;
-            }
-            else
-            {
-                radius = 80;
-                particle_color_ = ci::Color("green");
-
-                x_velocity = 5;
-                y_velocity = 5;
-            }
-
+        void IdealGasSimulator::AddParticle(ci::Color color) {
             // Generate a random position
-            int x_coordinate = GenerateRandomNumber(container_top_left_corner_.x, container_bottom_right_corner_.x);
-            int y_coordinate = GenerateRandomNumber(container_top_left_corner_.y, container_bottom_right_corner_.y);
+            double x_coordinate = GenerateRandomNumber(container_top_left_corner_.x, container_bottom_right_corner_.x);
+            double y_coordinate = GenerateRandomNumber(container_top_left_corner_.y, container_bottom_right_corner_.y);
 
-            // Generate a random velocity
-            //int x_velocity = 5;//GenerateRandomNumber(-20, 20);
-            //int y_velocity = 5;//GenerateRandomNumber(-20, 20);
+            // Declare velocity variables
+            double x_velocity;
+            double y_velocity;
 
-            // Create Particle
-            Particle particle(float(radius), particle_mass_, particle_color_, glm::vec2 {x_coordinate, y_coordinate}, glm::vec2 {x_velocity, y_velocity});
-            return particle;
+            if(color == ci::Color("red")) {
+                // Generate a random velocity between particle speed restrictions
+                x_velocity = GenerateRandomNumber(-1 * kRedParticleMaxInitialSpeed, kRedParticleMaxInitialSpeed);
+                y_velocity = GenerateRandomNumber(-1 * kRedParticleMaxInitialSpeed, kRedParticleMaxInitialSpeed);
+
+                Particle particle(kRedParticleRadius, kRedParticleMass, color, glm::vec2 {x_coordinate, y_coordinate}, glm::vec2 {x_velocity, y_velocity});
+                particles_.push_back(particle);
+            }
+            else if(color == ci::Color("blue")) {
+                // Generate a random velocity between particle speed restrictions
+                x_velocity = GenerateRandomNumber(-1 * kBlueParticleMaxInitialSpeed, kBlueParticleMaxInitialSpeed);
+                y_velocity = GenerateRandomNumber(-1 * kBlueParticleMaxInitialSpeed, kBlueParticleMaxInitialSpeed);
+
+                Particle particle(kBlueParticleRadius, kBlueParticleMass, color, glm::vec2 {x_coordinate, y_coordinate}, glm::vec2 {x_velocity, y_velocity});
+                particles_.push_back(particle);
+            }
+            else if(color == ci::Color("green")) {
+                // Generate a random velocity between particle speed restrictions
+                x_velocity = GenerateRandomNumber(-1 * kGreenParticleMaxInitialSpeed, kGreenParticleMaxInitialSpeed);
+                y_velocity = GenerateRandomNumber(-1 * kGreenParticleMaxInitialSpeed, kGreenParticleMaxInitialSpeed);
+
+                Particle particle(kGreenParticleRadius, kGreenParticleMass, color, glm::vec2 {x_coordinate, y_coordinate}, glm::vec2 {x_velocity, y_velocity});
+                particles_.push_back(particle);
+
+            }
+            else {
+                // Generate a random velocity between particle speed restrictions
+                x_velocity = GenerateRandomNumber(-30, 30);
+                y_velocity = GenerateRandomNumber(-30, 30);
+
+                Particle particle(10, 10, ci::Color("gray"), glm::vec2 {x_coordinate, y_coordinate}, glm::vec2 {x_velocity, y_velocity});
+                particles_.push_back(particle);
+            }
         }
 
         int IdealGasSimulator::GenerateRandomNumber(int lower, int upper)

@@ -44,15 +44,24 @@ namespace idealgas {
 
         void IdealGasApp::keyDown(ci::app::KeyEvent event) {
             switch (event.getCode()) {
-                case ci::app::KeyEvent::KEY_SPACE:
-                    // Create a particle at center
-                    simulator_.AddParticle();
-
-                    break;
-
                 case ci::app::KeyEvent::KEY_DELETE:
                     // Delete all particles
                     simulator_.ClearParticles();
+                    break;
+
+                case ci::app::KeyEvent::KEY_r:
+                    // Add a red particle
+                    simulator_.AddParticle(ci::Color("red"));
+                    break;
+
+                case ci::app::KeyEvent::KEY_b:
+                    // Add a blue particle
+                    simulator_.AddParticle(ci::Color("blue"));
+                    break;
+
+                case ci::app::KeyEvent::KEY_g:
+                    // Add a green particle
+                    simulator_.AddParticle(ci::Color("green"));
                     break;
             }
         }

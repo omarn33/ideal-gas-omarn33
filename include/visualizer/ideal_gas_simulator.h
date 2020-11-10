@@ -23,12 +23,20 @@ namespace idealgas {
             const std::string container_color_ = "white";
             const float container_stroke_ = 20.0f;
 
-            /** Default Particle */
-            float particle_radius_;
-            double particle_mass_;
-            ci::Color particle_color_;
-            glm::vec2 initial_position_;
-            glm::vec2 initial_velocity_;
+            /** Red Particle */
+            const float kRedParticleRadius = 20.0f;
+            const double kRedParticleMass = 20.0;
+            const double kRedParticleMaxInitialSpeed = 20.0;
+
+            /** Blue Particle */
+            const float kBlueParticleRadius = 40.0f;
+            const double kBlueParticleMass = 40.0;
+            const double kBlueParticleMaxInitialSpeed = 10.0;
+
+            /** Green Particle */
+            const float kGreenParticleRadius = 80.0f;
+            const double kGreenParticleMass = 80.0;
+            const double kGreenParticleMaxInitialSpeed = 5.0;
 
             /** Particle Physics */
             std::vector<Particle> particles_;
@@ -54,16 +62,10 @@ namespace idealgas {
             void Update();
 
             /**
-             * Adds particle to the container
-             * @param particle The particle to be added
+             * Adds a particle of a given color to the simulator
+             * @param color The color of the particle
              */
-            void AddParticle();
-
-            /**
-             * Generates a random particle
-             * @return Particle the randomly generated particle
-             */
-            Particle GenerateRandomParticle();
+            void AddParticle(ci::Color color);
 
             /**
              * Generates a random integer between an upper and lower bound inclusive
