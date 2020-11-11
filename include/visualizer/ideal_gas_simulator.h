@@ -24,16 +24,19 @@ namespace idealgas {
             const float container_stroke_ = 20.0f;
 
             /** Red Particle */
+            std::vector<Particle> red_particles_;
             const float kRedParticleRadius = 20.0f;
             const double kRedParticleMass = 20.0;
             const double kRedParticleMaxInitialSpeed = 20.0;
 
             /** Blue Particle */
+            std::vector<Particle> blue_particles_;
             const float kBlueParticleRadius = 40.0f;
             const double kBlueParticleMass = 40.0;
             const double kBlueParticleMaxInitialSpeed = 10.0;
 
             /** Green Particle */
+            std::vector<Particle> green_particles_;
             const float kGreenParticleRadius = 80.0f;
             const double kGreenParticleMass = 80.0;
             const double kGreenParticleMaxInitialSpeed = 5.0;
@@ -41,7 +44,6 @@ namespace idealgas {
             /** Particle Physics */
             std::vector<Particle> particles_;
             ParticlePhysics physics_;
-
 
         public:
             /**
@@ -79,6 +81,14 @@ namespace idealgas {
              * Clears all particles within the container
              */
             void ClearParticles();
+
+            /** Getter Methods */
+            std::vector<Particle> GetRedParticles();
+
+            std::vector<Particle> GetBlueParticles();
+
+            std::vector<Particle> GetGreenParticles();
+
         };
 
     } // namespace visualizer

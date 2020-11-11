@@ -17,7 +17,7 @@ namespace visualizer {
 
         // Store the speed for each particle
         for(size_t particle = 0; particle < histogram_particles_.size(); ++particle) {
-            particle_speeds_.at(particle) = histogram_particles_.at(particle).GetSpeed();
+            particle_speeds_.push_back(histogram_particles_.at(particle).GetSpeed());
         }
 
         // Determine the bin size for the histogram
@@ -68,8 +68,48 @@ namespace visualizer {
                                           histogram_bottom_right_corner_), kHistogramStroke);
 
         // Calculate
-        //float width = partition_size_ * (histogram_side_length_ / num_of_particles_per_partition_.size());
-        //float height = num_of_particles_per_partition_.at(0) * (histogram_side_length_ / histogram_particles_.size());
+        if(histogram_particles_.size() > 0) {
+
+            float width = (histogram_side_length_ / num_of_particles_per_partition_.size());
+            float height;
+
+            float histogram_bottom_left_x = (float) histogram_top_left_corner_.x;
+            float histogram_bottom_left_y = (float) (histogram_top_left_corner_.y + histogram_side_length_);
+
+            float bar_top_left_x;
+            float bar_top_left_y;
+
+            float bar_bottom_right_x;
+            float bar_bottom_right_y;
+
+            for(size_t bin = 0; bin < num_of_particles_per_partition_.size(); ++bin) {
+                height = num_of_particles_per_partition_.at(bin) * (histogram_side_length_ / histogram_particles_.size());
+
+                bar_top_left_x = histogram_bottom_left_x + (bin * width);
+                bar_top_left_y = histogram_bottom_left_y - height;
+
+                bar_bottom_right_x = histogram_bottom_left_x + ((bin + 1) * width);
+                bar_bottom_right_y = histogram_bottom_left_y;
+
+                ci::gl::color(histogram_color_);
+                ci::gl::drawSolidRect(ci::Rectf(
+                        glm::vec2{bar_top_left_x, bar_top_left_y},
+                        glm::vec2{bar_bottom_right_x, bar_bottom_right_y}));
+            }
+
+            /*
+            ci::gl::color(ci::Color("red"));
+            ci::gl::drawSolidRect(ci::Rectf(
+                    glm::vec2{200, 200},
+                    glm::vec2{300, 300}));
+                    */
+        }
+
+        // Clear all vectors
+        partition_values.clear();
+        num_of_particles_per_partition_.clear();
+        particle_speeds_.clear();
+        histogram_particles_.clear();
     }
 
 } // namespace visualizer

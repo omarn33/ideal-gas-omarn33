@@ -69,8 +69,8 @@ namespace idealgas {
 
         void IdealGasSimulator::AddParticle(ci::Color color) {
             // Generate a random position
-            double x_coordinate = GenerateRandomNumber(container_top_left_corner_.x, container_bottom_right_corner_.x);
-            double y_coordinate = GenerateRandomNumber(container_top_left_corner_.y, container_bottom_right_corner_.y);
+            double x_coordinate = GenerateRandomNumber(container_top_left_corner_.x + kGreenParticleRadius, container_bottom_right_corner_.x - kGreenParticleRadius);
+            double y_coordinate = GenerateRandomNumber(container_top_left_corner_.y + kGreenParticleRadius, container_bottom_right_corner_.y - kGreenParticleRadius);
 
             // Declare velocity variables
             double x_velocity;
@@ -83,6 +83,7 @@ namespace idealgas {
 
                 Particle particle(kRedParticleRadius, kRedParticleMass, color, glm::vec2 {x_coordinate, y_coordinate}, glm::vec2 {x_velocity, y_velocity});
                 particles_.push_back(particle);
+                red_particles_.push_back(particle);
             }
             else if(color == ci::Color("blue")) {
                 // Generate a random velocity between particle speed restrictions
@@ -91,6 +92,7 @@ namespace idealgas {
 
                 Particle particle(kBlueParticleRadius, kBlueParticleMass, color, glm::vec2 {x_coordinate, y_coordinate}, glm::vec2 {x_velocity, y_velocity});
                 particles_.push_back(particle);
+                blue_particles_.push_back(particle);
             }
             else if(color == ci::Color("green")) {
                 // Generate a random velocity between particle speed restrictions
@@ -99,7 +101,7 @@ namespace idealgas {
 
                 Particle particle(kGreenParticleRadius, kGreenParticleMass, color, glm::vec2 {x_coordinate, y_coordinate}, glm::vec2 {x_velocity, y_velocity});
                 particles_.push_back(particle);
-
+                green_particles_.push_back(particle);
             }
             else {
                 // Generate a random velocity between particle speed restrictions
@@ -120,7 +122,24 @@ namespace idealgas {
 
         void IdealGasSimulator::ClearParticles() {
             particles_.clear();
+            red_particles_.clear();
+            blue_particles_.clear();
+            green_particles_.clear();
         }
+
+        std::vector<Particle> IdealGasSimulator::GetRedParticles() {
+            return red_particles_;
+        }
+
+        std::vector<Particle> IdealGasSimulator::GetBlueParticles() {
+            return blue_particles_;
+        }
+
+        std::vector<Particle> IdealGasSimulator::GetGreenParticles() {
+            return green_particles_;
+        }
+
+
     } // namespace visualizer
 
 } // namespace idealgas

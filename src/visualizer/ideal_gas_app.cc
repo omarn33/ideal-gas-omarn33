@@ -25,8 +25,8 @@ namespace idealgas {
 
             // Display instructions
             ci::gl::drawStringCentered(
-                    "Press [Space] to add a particle. Press [Delete] to remove all particles.",
-                    glm::vec2(kWindowWidth / 2, kMargin / 2), ci::Color("white"), ci::Font("Arial", 60.0f));
+                    "Press [ R ] , [ B ] , [ G ] to add a particle. Press [ Delete ] to remove all particles.",
+                    glm::vec2(1850.0f, kMargin / 2), ci::Color("white"), ci::Font("Arial", 60.0f));
 
             // Display Ideal Gas Simulator
             simulator_.Draw();
@@ -40,6 +40,12 @@ namespace idealgas {
         void IdealGasApp::update() {
             // Update Ideal Gas Simulator
             simulator_.Update();
+
+            // Update Histograms
+            red_histogram_.GenerateHistogram(simulator_.GetRedParticles());
+            blue_histogram_.GenerateHistogram(simulator_.GetBlueParticles());
+            green_histogram_.GenerateHistogram(simulator_.GetGreenParticles());
+
         }
 
         void IdealGasApp::keyDown(ci::app::KeyEvent event) {
