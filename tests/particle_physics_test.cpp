@@ -744,3 +744,95 @@ TEST_CASE("Check Particle Position After Collision") {
         REQUIRE(collision_particle2.GetPosition().y == 21.5f);
     }
 }
+
+TEST_CASE("Test Law of Conservation of Energy") {
+    // Set container boundaries
+    glm::vec2 top_left(0.0, 0.0);
+    glm::vec2 bottom_right(100.0, 100.0);
+
+    // Set initial position and velocity vectors
+    glm::vec2 position1(50.0, 10.0);
+    glm::vec2 velocity1(1.0, -1.0);
+
+    glm::vec2 position2(20.0, 20.0);
+    glm::vec2 velocity2(0.1, 0.0);
+
+    glm::vec2 position3(21.4, 21.4);
+    glm::vec2 velocity3(-0.1, 0.0);
+
+    // Create a particle
+    Particle particle1(30.0f, 10.0, "red", position1, velocity1);
+
+    // Create a particle
+    Particle particle2(20.0f, 20.0, "blue", position2, velocity2);
+
+    // Create a particle
+    Particle particle3(10.0f, 30.0, "green", position3, velocity3);
+
+    ParticlePhysics physics(top_left, bottom_right);
+    std::vector<Particle> particles_;
+
+    particles_.push_back(particle1);
+    particles_.push_back(particle2);
+    particles_.push_back(particle3);
+
+    SECTION("Test Kinetic Energy Conservation") {
+
+        size_t counter = 0;
+        size_t number_of_frames = 500;
+
+        double initial_energy = ((0.5) * (particle1.GetMass()) * (particle1.GetSpeed()) * (particle1.GetSpeed())) +
+                ((0.5) * (particle2.GetMass()) * (particle2.GetSpeed()) * (particle2.GetSpeed())) +
+                ((0.5) * (particle3.GetMass()) * (particle3.GetSpeed()) * (particle3.GetSpeed()));
+
+        // Run the simulation for 500 rounds
+        while(counter < number_of_frames) {
+
+
+            // Determine if a particle collided with the container
+            for (size_t particle = 0; particle < particles_.size(); ++particle) {
+                // Determine if a particle collided with the container in a corner
+                if (physics.HasParticleCollidedWithWall(particles_.at(particle), 'x') &&
+                    physics.HasParticleCollidedWithWall(particles_.at(particle), 'y')) {
+
+                    physics.CalculateVelocityAfterWallCollision(particles_.at(particle), 'x');
+                    physics.CalculateVelocityAfterWallCollision(particles_.at(particle), 'y');
+                }
+                    // Determine if a particle collided with the left/right container boundary
+                else if (physics.HasParticleCollidedWithWall(particles_.at(particle), 'x')) {
+                    physics.CalculateVelocityAfterWallCollision(particles_.at(particle), 'x');
+                }
+                    // Determine if a particle collided with the left/right container boundary
+                else if (physics.HasParticleCollidedWithWall(particles_.at(particle), 'y')) {
+                    physics.CalculateVelocityAfterWallCollision(particles_.at(particle), 'y');
+                }
+
+                // Update particle position
+                physics.CalculatePositionAfterCollision(particles_.at(particle));
+            }
+
+            // Determine if a particle collided with another particle
+            for (size_t particle1 = 0; particle1 < particles_.size(); ++particle1) {
+                for (size_t particle2 = particle1 + 1; particle2 < particles_.size(); ++particle2) {
+                    if (physics.HasParticleCollidedWithParticle(particles_.at(particle1), particles_.at(particle2))) {
+
+                        physics.CalculateVelocityAfterParticleCollision(particles_.at(particle1),
+                                                                         particles_.at(particle2));
+
+                        // Update particle positions
+                        physics.CalculatePositionAfterCollision(particles_.at(particle1));
+                        physics.CalculatePositionAfterCollision(particles_.at(particle2));
+                    }
+                }
+            }
+
+            ++counter;
+        }
+
+        double final_energy = ((0.5) * (particle1.GetMass()) * (particle1.GetSpeed()) * (particle1.GetSpeed())) +
+                                ((0.5) * (particle2.GetMass()) * (particle2.GetSpeed()) * (particle2.GetSpeed())) +
+                                ((0.5) * (particle3.GetMass()) * (particle3.GetSpeed()) * (particle3.GetSpeed()));
+
+        REQUIRE(initial_energy == final_energy);
+    }
+}

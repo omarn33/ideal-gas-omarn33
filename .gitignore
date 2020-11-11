@@ -149,4 +149,4 @@ core/model_trainer.h
 core/model_trainer.cpp
 tests/image_classifier_tests.cpp
 tests/image_tests.cc
-tests/model_trainer_tests.cpp
+tests/histogram_test.cpp

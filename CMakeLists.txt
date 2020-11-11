@@ -41,9 +41,10 @@ FetchContent_Declare(
 FetchContent_GetProperties(catch2)
 if(NOT catch2_POPULATED)
     FetchContent_Populate(catch2)
-    #add_library(catch2 INTERFACE tests/image_processor_tests.cpp)
+    add_library(catch2 INTERFACE)
     #add_library(catch2 INTERFACE src/core/histogram.cpp include/core/histogram.h)
-    #target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
+
+    target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 endif()
 
 get_filename_component(CINDER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../" ABSOLUTE)
@@ -62,7 +63,7 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
         src/visualizer/ideal_gas_app.cc
         src/visualizer/ideal_gas_simulator.cc)
 
-list(APPEND TEST_FILES tests/particle_physics_test.cpp)
+list(APPEND TEST_FILES tests/particle_physics_test.cpp tests/histogram_test.cpp)
 
 add_executable(main apps/main.cc ${CORE_SOURCE_FILES})
 target_include_directories(main PRIVATE include)
