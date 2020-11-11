@@ -24,7 +24,7 @@ private:
     const ci::Color kHistogramBorderColor = ci::Color("white");
     const float kHistogramStroke = 10.0f;
 
-    /** Bin Size */
+    /** Bin Width Data */
     double partition_size_;
     std::vector<double> partition_values;
     std::vector<size_t> num_of_particles_per_partition_;
