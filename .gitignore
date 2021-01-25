@@ -143,4 +143,10 @@ _deps
 
 # End of https://www.gitignore.io/api/c++,cmake,clion
 data/*
-
+core/image_classifier.h
+core/image_classifier.cpp
+core/model_trainer.h
+core/model_trainer.cpp
+tests/image_classifier_tests.cpp
+tests/image_tests.cc
+tests/histogram_test.cpp

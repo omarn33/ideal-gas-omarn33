@@ -1,3 +1,4 @@
+/*
 //
 // Created by Omar on 10/20/2020.
 //
@@ -58,3 +59,4 @@ TEST_CASE("Image Classifier") {
     REQUIRE(true);
   }
 }
+ */

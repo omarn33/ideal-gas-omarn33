@@ -16,10 +16,10 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Warning flags
 if(MSVC)
     # warning level 3 and all warnings as errors
-    add_compile_options(/W3 /WX)
+    #add_compile_options(/W3 /WX)
 else()
     # lots of warnings and all warnings as errors
-    add_compile_options(-Wall -Wpedantic -Werror)
+    #add_compile_options(-Wall -Wpedantic -Werror)
 endif()
 
 # FetchContent added in CMake 3.11, downloads during the configure step
@@ -41,8 +41,9 @@ FetchContent_Declare(
 FetchContent_GetProperties(catch2)
 if(NOT catch2_POPULATED)
     FetchContent_Populate(catch2)
-    #add_library(catch2 INTERFACE tests/image_processor_tests.cpp)
     add_library(catch2 INTERFACE)
+    #add_library(catch2 INTERFACE src/core/histogram.cpp include/core/histogram.h)
+
     target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 endif()
 
@@ -52,29 +53,30 @@ get_filename_component(APP_PATH "${CMAKE_CURRENT_SOURCE_DIR}/" ABSOLUTE)
 
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
-list(APPEND CORE_SOURCE_FILES src/core/particle.cpp src/core/image_parser.cpp src/core/model_trainer.cpp)
+list(APPEND CORE_SOURCE_FILES src/core/particle.cpp src/core/particle_physics.cpp)
 
 
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
                             #src/core/image_processor.cpp
                             #src/core/image.cpp
-                            src/visualizer/naive_bayes_app.cc
-                            src/visualizer/sketchpad.cc)
+        src/visualizer/histogram.cpp
+        src/visualizer/ideal_gas_app.cc
+        src/visualizer/ideal_gas_simulator.cc)
 
-list(APPEND TEST_FILES tests/image_tests.cc tests/image_parser_tests.cpp tests/model_trainer_tests.cpp tests/image_classifier_tests.cpp)
+list(APPEND TEST_FILES tests/particle_physics_test.cpp tests/histogram_test.cpp)
 
-add_executable(train-model apps/main.cc ${CORE_SOURCE_FILES} src/core/model_trainer.cpp include/core/image_classifier.h src/core/image_classifier.cpp)
-target_include_directories(train-model PRIVATE include)
+add_executable(main apps/main.cc ${CORE_SOURCE_FILES})
+target_include_directories(main PRIVATE include)
 
 ci_make_app(
-        APP_NAME        sketchpad-classifier
+        APP_NAME        ideal-gas-simulation
         CINDER_PATH     ${CINDER_PATH}
         SOURCES         apps/cinder_app_main.cc ${SOURCE_FILES}
         INCLUDES        include
 )
 
 ci_make_app(
-        APP_NAME        naive-bayes-test
+        APP_NAME        ideal-gas-test
         CINDER_PATH     ${CINDER_PATH}
         SOURCES         tests/test_main.cc ${SOURCE_FILES} ${TEST_FILES}
         INCLUDES        include
@@ -82,5 +84,5 @@ ci_make_app(
 )
 
 if(MSVC)
-    set_property(TARGET naive-bayes-test APPEND_STRING PROPERTY LINK_FLAGS " /SUBSYSTEM:CONSOLE")
+    set_property(TARGET ideal-gas-test APPEND_STRING PROPERTY LINK_FLAGS " /SUBSYSTEM:CONSOLE")
 endif()
